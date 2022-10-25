@@ -3,7 +3,12 @@ import pygame
 RED = (255, 10, 10)
 RED_LIGHT = (255, 80, 72)
 
-props = [
+ANGLE_0 = 0
+ANGLE_90 = 1
+ANGLE_180 = 2
+ANGLE_170 = 3
+
+PROPS = [
     # PIECES DE 1
     {
         "length": 1,
@@ -163,6 +168,7 @@ class Prop(pygame.sprite.Sprite):
 
     def __init__(self, pos, prop):
         super().__init__()
+        self.rotation = ANGLE_0
         self.size = 25
         self.locked = False
         self.selected = False

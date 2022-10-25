@@ -21,9 +21,9 @@ class Window:
 
         clock = pygame.time.Clock()
 
-    def drawGrid(self, size=20):
+    def drawGrid(self, grid):
         blockSize = 25 # Set the size of the grid block
-        for x in range(size):
-            for y in range(size):
+        for x in range(len(grid)):
+            for y in range(len(grid[x])):
                 rect = pygame.Rect(x*blockSize, y*blockSize, blockSize, blockSize)
                 pygame.draw.rect(self.grid, GRAY, rect, 2)
