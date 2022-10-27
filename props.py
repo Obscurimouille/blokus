@@ -168,6 +168,9 @@ class Prop(pygame.sprite.Sprite):
         self.rotation = ANGLE_0
         self.size = 25
         self.color = color
+        self.highlight_color = self.getHighlight(color)
+        print(self.color)
+        print(self.highlight_color)
         self.placed = False
         self.selected = False
         self.length = prop["length"]
@@ -186,13 +189,29 @@ class Prop(pygame.sprite.Sprite):
         self.selected = not self.selected
         self.draw()
 
+    def rotate(self):
+        # https://stackoverflow.com/questions/53250821/in-python-how-do-i-rotate-a-matrix-90-degrees-counterclockwise
+        self.pattern = [[self.pattern[j][i] for j in range(len(self.pattern))] for i in range(len(self.pattern[0])-1, -1, -1)]
+
+    def print(self):
+        print("---------")
+        for i in range(len(self.pattern)):
+            for j in range(len(self.pattern[i])):
+                print(self.pattern[i][j], ", ", end="", sep="")
+            print()
+        print("---------")
+
     def draw(self):
         for i in range(len(self.pattern)):
             for j in range(len(self.pattern[i])):
                 if self.pattern[i][j]:
-                    pygame.draw.rect(self.image, self.color if self.selected else self.color, pygame.Rect((j*self.size, i*self.size), (self.size, self.size)))
+                    pygame.draw.rect(self.image, self.highlight_color if self.selected else self.color, pygame.Rect((j*self.size, i*self.size), (self.size, self.size)))
 
     def click(self, event):
         mouse_pos = pygame.mouse.get_pos()
         if pygame.mouse.get_pressed()[0]:
             return self.rect.collidepoint(mouse_pos)
+
+    def getHighlight(self, color, gain=10):
+        r, g, b = color
+        return int(r + gain * r * (1 - (r / 255))), int(g + gain * g * (1 - (g / 255))), int(b + gain * b * (1 - (b / 255)))

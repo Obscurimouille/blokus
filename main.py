@@ -1,5 +1,6 @@
 import pygame
 from grid import Grid
+from props import PROPS, Prop
 from window import Window
 import sys
 from game import Game
