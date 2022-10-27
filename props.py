@@ -190,8 +190,10 @@ class Prop(pygame.sprite.Sprite):
         self.draw()
 
     def rotate(self):
+        self.erase()
         # https://stackoverflow.com/questions/53250821/in-python-how-do-i-rotate-a-matrix-90-degrees-counterclockwise
         self.pattern = [[self.pattern[j][i] for j in range(len(self.pattern))] for i in range(len(self.pattern[0])-1, -1, -1)]
+        self.draw()
 
     def print(self):
         print("---------")
@@ -200,6 +202,12 @@ class Prop(pygame.sprite.Sprite):
                 print(self.pattern[i][j], ", ", end="", sep="")
             print()
         print("---------")
+
+    def erase(self):
+        for i in range(len(self.pattern)):
+            for j in range(len(self.pattern[i])):
+                if self.pattern[i][j]:
+                    pygame.draw.rect(self.image, pygame.SRCALPHA, pygame.Rect((j*self.size, i*self.size), (self.size, self.size)))
 
     def draw(self):
         for i in range(len(self.pattern)):

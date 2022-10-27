@@ -23,6 +23,8 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             game.handleMouseDown(event)
             grid.print()
+        if event.type == pygame.KEYDOWN:
+            game.handleKeyDown(event)
 
     game.props.draw(window.view)
     game.grid.props["group"].draw(window.view)

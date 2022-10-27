@@ -28,6 +28,10 @@ class Game:
         self.props.empty()
         for p in self.getCurrentPlayer().inventory: self.props.add(p)
 
+    def handleKeyDown(self, event):
+        if event.key == pygame.K_r:
+            if self.selection: self.selection.rotate()
+
     def handleMouseDown(self, event):
         touch_prop = False
         for p in self.getCurrentPlayer().inventory:
