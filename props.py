@@ -189,6 +189,12 @@ class Prop(pygame.sprite.Sprite):
         self.selected = not self.selected
         self.draw()
 
+    def flip(self):
+        self.erase()
+        # https://stackoverflow.com/questions/53250821/in-python-how-do-i-rotate-a-matrix-90-degrees-counterclockwise
+        self.pattern = self.pattern[::-1]
+        self.draw()
+
     def rotate(self):
         self.erase()
         # https://stackoverflow.com/questions/53250821/in-python-how-do-i-rotate-a-matrix-90-degrees-counterclockwise

@@ -29,7 +29,7 @@ class Grid:
         elif player == 1:
             return pos[0]+len(prop.pattern[0]) == SIZE and pos[1] == 0 and prop.pattern[0][-1]
         elif player == 2:
-            return (pos[0]+len(prop.pattern[0]) == SIZE and prop.pattern[0][-1]) and (pos[1]+len(prop.pattern) == SIZE and prop.pattern[-1][-1])
+            return pos[0]+len(prop.pattern[0]) == SIZE and (pos[1]+len(prop.pattern) == SIZE and prop.pattern[-1][-1])
         elif player == 3:
             return pos[0] == 0 and pos[1]+len(prop.pattern) == SIZE and prop.pattern[-1][0]
 

@@ -31,16 +31,29 @@ class Game:
     def handleKeyDown(self, event):
         if event.key == pygame.K_r:
             if self.selection: self.selection.rotate()
+        elif event.key == pygame.K_f:
+            if self.selection: self.selection.flip()
 
     def handleMouseDown(self, event):
-        touch_prop = False
-        for p in self.getCurrentPlayer().inventory:
-            if p.click(event) and not self.selection and not p.placed:
-                self.selection = p if not self.selection else None
-                self.selection.toggleSelect()
-                touch_prop = True
+        touched_prop = None
 
-        if self.selection and not touch_prop:
+        for p in self.getCurrentPlayer().inventory:
+            if p.click(event) and not p.placed:
+                touched_prop = p
+                break
+
+        if touched_prop:
+            if touched_prop == self.selection:
+                self.selection.toggleSelect()
+                self.selection = None
+                return
+
+            elif self.selection:
+                self.selection.toggleSelect()
+            self.selection = touched_prop
+            self.selection.toggleSelect()
+
+        if self.selection and not touched_prop:
             grid_pos = utils.convertToGridPos(pygame.mouse.get_pos())
 
             if not self.grid.isPropFitting(self.selection, grid_pos):
