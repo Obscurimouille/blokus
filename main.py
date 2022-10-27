@@ -9,9 +9,6 @@ game = Game(grid)
 window = Window()
 window.drawGrid(grid.grid)
 
-group = pygame.sprite.RenderPlain()
-for p in game.props: group.add(p)
-
 while True:
     window.view.blit(window.background, (0, 0))
     window.view.blit(window.grid, (0, 0))
@@ -24,6 +21,8 @@ while True:
         # MOUSEDOWN
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             game.handleMouseDown(event)
+            grid.print()
 
-    group.draw(window.view)
+    game.props.draw(window.view)
+    game.grid.props["group"].draw(window.view)
     pygame.display.flip()

@@ -1,8 +1,5 @@
 import pygame
 
-RED = (255, 10, 10)
-RED_LIGHT = (255, 80, 72)
-
 ANGLE_0 = 0
 ANGLE_90 = 1
 ANGLE_180 = 2
@@ -166,16 +163,17 @@ PROPS = [
 
 class Prop(pygame.sprite.Sprite):
 
-    def __init__(self, pos, prop):
+    def __init__(self, pos, prop, color=(128, 128, 128)):
         super().__init__()
         self.rotation = ANGLE_0
         self.size = 25
-        self.locked = False
+        self.color = color
+        self.placed = False
         self.selected = False
         self.length = prop["length"]
         self.pattern = prop["pattern"]
 
-        self.image = pygame.Surface((100, 100), pygame.SRCALPHA, 32)
+        self.image = pygame.Surface((self.length*self.size, self.length*self.size), pygame.SRCALPHA, 32)
         self.rect = self.image.get_rect()
         self.rect.topleft = pos
 
@@ -192,11 +190,9 @@ class Prop(pygame.sprite.Sprite):
         for i in range(len(self.pattern)):
             for j in range(len(self.pattern[i])):
                 if self.pattern[i][j]:
-                    pygame.draw.rect(self.image, RED_LIGHT if self.selected else RED, pygame.Rect((j*self.size, i*self.size), (self.size, self.size)))
+                    pygame.draw.rect(self.image, self.color if self.selected else self.color, pygame.Rect((j*self.size, i*self.size), (self.size, self.size)))
 
     def click(self, event):
         mouse_pos = pygame.mouse.get_pos()
         if pygame.mouse.get_pressed()[0]:
-            collid = self.rect.collidepoint(mouse_pos)
-            return collid
-
+            return self.rect.collidepoint(mouse_pos)
