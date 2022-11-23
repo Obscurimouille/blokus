@@ -22,7 +22,7 @@ while True:
         # MOUSEDOWN
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             game.handleMouseDown(event)
-            grid.print()
+            # grid.print()
         if event.type == pygame.KEYDOWN:
             game.handleKeyDown(event)
 

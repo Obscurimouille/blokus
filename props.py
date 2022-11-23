@@ -169,8 +169,6 @@ class Prop(pygame.sprite.Sprite):
         self.size = 25
         self.color = color
         self.highlight_color = self.getHighlight(color)
-        print(self.color)
-        print(self.highlight_color)
         self.placed = False
         self.selected = False
         self.length = prop["length"]
@@ -223,6 +221,8 @@ class Prop(pygame.sprite.Sprite):
 
     def click(self, event):
         mouse_pos = pygame.mouse.get_pos()
+        print(mouse_pos)
+        print(self.image.get_rect().topleft)
         if pygame.mouse.get_pressed()[0]:
             return self.rect.collidepoint(mouse_pos)
 

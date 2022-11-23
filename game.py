@@ -56,11 +56,11 @@ class Game:
         if self.selection and not touched_prop:
             grid_pos = utils.convertToGridPos(pygame.mouse.get_pos())
 
-            if not self.grid.isPropFitting(self.selection, grid_pos):
+            if not self.grid.isPropFittingInGrid(self.selection, grid_pos):
                 print("Can't fit in grid")
                 return
-            if self.grid.isPropOverlapping(self.selection, grid_pos):
-                print("Overlapping")
+            if not self.grid.isValidMove(self.selection, grid_pos, self.player, self.getCurrentPlayer().first_move):
+                print("Wrong placement")
                 return
 
             if self.getCurrentPlayer().first_move:
