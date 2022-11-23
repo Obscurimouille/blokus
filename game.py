@@ -48,8 +48,8 @@ class Game:
                 self.selection = None
                 return
 
-            elif self.selection:
-                self.selection.toggleSelect()
+            elif self.selection: self.selection.toggleSelect()
+
             self.selection = touched_prop
             self.selection.toggleSelect()
 
