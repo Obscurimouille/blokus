@@ -10,6 +10,7 @@ game = Game(grid)
 window = Window()
 window.drawGrid(grid.grid)
 
+
 while True:
     window.view.blit(window.background, (0, 0))
     window.view.blit(window.grid, (0, 0))
@@ -26,6 +27,7 @@ while True:
         if event.type == pygame.KEYDOWN:
             game.handleKeyDown(event)
 
+    game.grid.hints["group"].draw(window.view)
     game.props.draw(window.view)
     game.grid.props["group"].draw(window.view)
     pygame.display.flip()

@@ -1,11 +1,13 @@
 from enum import Enum
 import pygame
+from props import RED, GREEN, BLUE, YELLOW
 
 EMPTY = 0
 X = 0
 Y = 1
 
 SIZE = 16
+
 
 class Grid:
 
@@ -15,7 +17,17 @@ class Grid:
             "list": [],
             "group": pygame.sprite.RenderPlain()
         }
-        print(self.grid)
+        self.hints = {
+            "list": [],
+            "group": pygame.sprite.Group()
+        }
+
+        self.initHints()
+
+    def initHints(self):
+        self.hints["list"] = [Hint(RED, 5, 5), Hint(YELLOW, 5, 5+(SIZE-1)*25), Hint(BLUE, 5+(SIZE-1)*25, 5+(SIZE-1)*25), Hint(GREEN, 5+(SIZE-1)*25, 5)]
+        for hint in self.hints["list"]:
+            self.hints["group"].add(hint)
 
     def print(self):
         print("---------------------------------------")
@@ -72,7 +84,20 @@ class Grid:
             for dx in range(len(prop.pattern[dy])):
                 # CLAMP X & Y TO GRID
                 x, y = max(min(pos[0]+dx, SIZE-1), 0), max(min(pos[1]+dy, SIZE-1), 0)
-                if prop.pattern[dy][dx] and (self.grid[y][x] != EMPTY or not self.isTileValid((x, y), player)): return False
-                if not first_move and not is_placed_on_corner and self.isTileTouchCorner((x, y), player): is_placed_on_corner = True
+                if prop.pattern[dy][dx]:
+                    if self.grid[y][x] != EMPTY or not self.isTileValid((x, y), player): return False
+                    if not first_move and not is_placed_on_corner and self.isTileTouchCorner((x, y), player): is_placed_on_corner = True
 
         return is_placed_on_corner or first_move
+
+class Hint(pygame.sprite.Sprite):
+    def __init__(self, color, x, y):
+        super().__init__()
+
+        self.image = pygame.Surface([16, 16])
+        self.image.fill(pygame.SRCALPHA)
+
+        pygame.draw.circle(self.image, color, (8, 8), 5)
+
+        self.rect = self.image.get_rect()
+        self.rect.x, self.rect.y = x, y

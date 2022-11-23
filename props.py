@@ -5,6 +5,11 @@ ANGLE_90 = 1
 ANGLE_180 = 2
 ANGLE_170 = 3
 
+RED = (255, 10, 10)
+GREEN = (10, 255, 10)
+BLUE = (10, 10, 255)
+YELLOW = (255, 255, 10)
+
 PROPS = [
     # PIECES DE 1
     {
