@@ -79,6 +79,7 @@ class Game:
 
             self.selection.toggleSelect()
             self.selection.placed = True
+            self.getCurrentPlayer().inventory.remove(self.selection)
             self.selection = None
             self.nextPlayer()
 

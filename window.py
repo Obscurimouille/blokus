@@ -14,6 +14,7 @@ class Window:
 
         # WINDOW
         pygame.display.set_caption("Blokus")
+        self.bg = pygame.image.load("images/background.png")
         self.view = pygame.display.set_mode((screen_width, screen_height))
         self.view.fill((250, 250, 255))
         self.background = pygame.Surface((screen_width, screen_height))

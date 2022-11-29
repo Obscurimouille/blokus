@@ -14,6 +14,7 @@ window.drawGrid(grid.grid)
 while True:
     window.view.blit(window.background, (0, 0))
     window.view.blit(window.grid, (0, 0))
+    window.view.blit(window.bg, (0, 0))
 
     for event in pygame.event.get():
         # EXIT GAME
