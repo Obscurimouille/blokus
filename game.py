@@ -82,6 +82,7 @@ class Game:
             self.getCurrentPlayer().inventory.remove(self.selection)
             self.grid.isAnyValidMove(self.getCurrentPlayer(), self.getCurrentPlayer().first_move,self.player)
             self.selection = None
+            self.leaderboard()
             self.nextPlayer()
 
     def getCurrentPlayer(self):
@@ -120,3 +121,16 @@ class Game:
             view.blit(text, rect)
 
 
+
+    def countPoint(self,NumPlayer):
+        RemainingPiece = self.players[NumPlayer].inventory
+        TotalPoint = 0
+        for numProp in range(len(RemainingPiece)):
+            TotalPoint = TotalPoint + self.players[NumPlayer].inventory[numProp].length
+        return TotalPoint
+
+    def leaderboard(self):
+        Leaderboard = []
+        for i in range(4):
+            Leaderboard.append({"player":i + 1,"points":self.countPoint(i)})
+        print(Leaderboard)
