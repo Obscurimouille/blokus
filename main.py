@@ -31,4 +31,9 @@ while True:
     game.grid.hints["group"].draw(window.view)
     game.props.draw(window.view)
     game.grid.props["group"].draw(window.view)
+
+    # if True:
+    #     window.view.blit(window.background, (0, 0))
+    #     game.dispEndGame(window.view)
+
     pygame.display.flip()

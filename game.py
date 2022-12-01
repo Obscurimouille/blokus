@@ -85,3 +85,37 @@ class Game:
 
     def getCurrentPlayer(self):
         return self.players[self.player]
+
+    def dispEndGame(self, view):
+        font = pygame.font.Font('freesansbold.ttf', 48)
+
+        text = font.render("Félicitations !", True, (255, 255, 255))
+        rect = text.get_rect()
+        rect.center = (400, 200)
+
+        view.blit(text, rect)
+
+        font = pygame.font.Font('freesansbold.ttf', 32)
+
+        text = font.render("Classement", True, (255, 255, 255))
+        rect = text.get_rect()
+        rect.center = (400, 325)
+
+        view.blit(text, rect)
+
+        stats = [{"player": 1, "points": 45}, {"player": 2, "points": 12}, {"player": 3, "points": 98}, {"player": 4, "points": 85}]
+        self.dispLeaderboard(stats, view, 500)
+
+    def dispLeaderboard(self, stats, view, y = 400):
+        stats = sorted(stats, key=lambda d: d['points'])
+        line_height = 50
+        font = pygame.font.Font('freesansbold.ttf', 24)
+
+        for player, data in enumerate(stats):
+            stat = str(player+1) + ". Joueur " + str(data["player"]) + ": " + str(data["points"])
+            text = font.render(stat, True, (255, 255, 255))
+            rect = text.get_rect()
+            rect.center = (400, y - 2*line_height + player * line_height)
+            view.blit(text, rect)
+
+
