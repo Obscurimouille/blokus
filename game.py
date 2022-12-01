@@ -80,6 +80,7 @@ class Game:
             self.selection.toggleSelect()
             self.selection.placed = True
             self.getCurrentPlayer().inventory.remove(self.selection)
+            self.grid.isAnyValidMove(self.getCurrentPlayer(), self.getCurrentPlayer().first_move,self.player)
             self.selection = None
             self.nextPlayer()
 
