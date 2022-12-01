@@ -1,7 +1,7 @@
 import pygame
 
-screen_width = 800
-screen_height = 800
+screen_width = 1000
+screen_height = 900
 
 WHITE = (255, 255, 255)
 BLACK = (10, 10, 10)

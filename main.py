@@ -6,8 +6,8 @@ import sys
 from game import Game
 
 grid = Grid()
-game = Game(grid)
 window = Window()
+game = Game(grid, window)
 window.drawGrid(grid.grid)
 
 
@@ -32,8 +32,8 @@ while True:
     game.props.draw(window.view)
     game.grid.props["group"].draw(window.view)
 
-    # if True:
-    #     window.view.blit(window.background, (0, 0))
-    #     game.dispEndGame(window.view)
+    if game.end:
+        window.view.blit(window.background, (0, 0))
+        game.dispEndGame(game.leaderboard(), window.view)
 
     pygame.display.flip()

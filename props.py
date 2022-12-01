@@ -226,8 +226,6 @@ class Prop(pygame.sprite.Sprite):
 
     def click(self, event):
         mouse_pos = pygame.mouse.get_pos()
-        print(mouse_pos)
-        print(self.image.get_rect().topleft)
         if pygame.mouse.get_pressed()[0]:
             return self.rect.collidepoint(mouse_pos)
 

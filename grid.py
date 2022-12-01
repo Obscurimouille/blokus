@@ -6,7 +6,7 @@ EMPTY = 0
 X = 0
 Y = 1
 
-SIZE = 16
+SIZE = 20
 
 
 class Grid:
@@ -90,15 +90,15 @@ class Grid:
 
         return is_placed_on_corner or first_move
 
-    def isAnyValidMove(self, player, first_move,nb_player):
+    def isAnyValidMove(self, player, first_move, nb_player):
         if first_move: return True
         inv = player.inventory.copy()
 
-        self.print()
         for prop in inv:
             for posy in range(len(self.grid)):
                 for posx in range(len(self.grid[posy])):
-                    pos = (posx,posy)
+                    if self.grid[posy][posx]: continue
+                    pos = (posx, posy)
                     rf = 0
                     while rf <= 8:
                         if rf in [1, 2, 3, 5, 6, 7, 8]:
@@ -106,9 +106,7 @@ class Grid:
                         if rf == 4:
                             prop.rotate()
                             prop.flip()
-                        if self.isPropFittingInGrid(prop, pos) and self.isValidMove(prop, pos, nb_player, first_move):
-                            print("tu peux encore jouer {}".format(player.color))
-                            return True
+                        if self.isPropFittingInGrid(prop, pos) and self.isValidMove(prop, pos, nb_player, first_move): return True
                         rf += 1
         print("tu ne peux plus jouer {}".format(player.color))
         return False

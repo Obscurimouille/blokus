@@ -11,17 +11,18 @@ YELLOW = (255, 255, 10)
 
 class Game:
 
-    def __init__(self, grid):
+    def __init__(self, grid, window):
         self.player = 0
         self.players = [Player(RED), Player(GREEN), Player(BLUE), Player(YELLOW)]
         self.grid = grid
         self.selection = None
         self.props = pygame.sprite.RenderPlain()
         self.updateDisplayedProps()
+        self.window = window
+        self.end = False
 
     def nextPlayer(self):
         self.player = (self.player + 1) % 4
-        print("Player :", self.player + 1)
         self.updateDisplayedProps()
 
     def updateDisplayedProps(self):
@@ -80,15 +81,26 @@ class Game:
             self.selection.toggleSelect()
             self.selection.placed = True
             self.getCurrentPlayer().inventory.remove(self.selection)
-            self.grid.isAnyValidMove(self.getCurrentPlayer(), self.getCurrentPlayer().first_move,self.player)
+            self.grid.isAnyValidMove(self.getCurrentPlayer(), self.getCurrentPlayer().first_move, self.player)
             self.selection = None
-            self.leaderboard()
+
+            # SI FIN DE PARTIE
+            if not self.nextRound():
+                self.end = True
+                leaderboard = self.leaderboard()
+
+    def nextRound(self):
+        for i in range(4):
             self.nextPlayer()
+            if self.grid.isAnyValidMove(self.getCurrentPlayer(), self.getCurrentPlayer().first_move, self.player): return True
+        return False
 
     def getCurrentPlayer(self):
         return self.players[self.player]
 
-    def dispEndGame(self, view):
+    def dispEndGame(self, leaderboard, view):
+        self.window.view.blit(self.window.background, (0, 0))
+
         font = pygame.font.Font('freesansbold.ttf', 48)
 
         text = font.render("Félicitations !", True, (255, 255, 255))
@@ -105,8 +117,7 @@ class Game:
 
         view.blit(text, rect)
 
-        stats = [{"player": 1, "points": 45}, {"player": 2, "points": 12}, {"player": 3, "points": 98}, {"player": 4, "points": 85}]
-        self.dispLeaderboard(stats, view, 500)
+        self.dispLeaderboard(leaderboard, view, 500)
 
     def dispLeaderboard(self, stats, view, y = 400):
         stats = sorted(stats, key=lambda d: d['points'])
@@ -120,9 +131,7 @@ class Game:
             rect.center = (400, y - 2*line_height + player * line_height)
             view.blit(text, rect)
 
-
-
-    def countPoint(self,NumPlayer):
+    def countPoint(self, NumPlayer):
         RemainingPiece = self.players[NumPlayer].inventory
         TotalPoint = 0
         for numProp in range(len(RemainingPiece)):
@@ -130,7 +139,7 @@ class Game:
         return TotalPoint
 
     def leaderboard(self):
-        Leaderboard = []
+        leaderboard = []
         for i in range(4):
-            Leaderboard.append({"player":i + 1,"points":self.countPoint(i)})
-        print(Leaderboard)
+            leaderboard.append({"player": i + 1, "points": self.countPoint(i)})
+        return leaderboard
