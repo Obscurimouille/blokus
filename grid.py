@@ -24,11 +24,13 @@ class Grid:
 
         self.initHints()
 
+    # CREATIONS DES INDICES DE COULEUR
     def initHints(self):
         self.hints["list"] = [Hint(RED, 5, 5), Hint(YELLOW, 5, 5+(SIZE-1)*25), Hint(BLUE, 5+(SIZE-1)*25, 5+(SIZE-1)*25), Hint(GREEN, 5+(SIZE-1)*25, 5)]
         for hint in self.hints["list"]:
             self.hints["group"].add(hint)
 
+    # AFFICHER LA GRILLE  EN CONSOLE
     def print(self):
         print("---------------------------------------")
         for i in range(len(self.grid)):
@@ -36,6 +38,7 @@ class Grid:
                 print(self.grid[i][j], ", ", end="", sep="")
             print()
 
+    # VERIFIER SI UN DEPLACEMENT EST POSSIBLE EN TANT QUE PREMIER (dans le coin du joueur)
     def isValidFirstMove(self, prop, pos, player):
         if player == 0:
             return pos[0] == 0 and pos[1] == 0 and prop.pattern[0][0]
@@ -46,6 +49,7 @@ class Grid:
         elif player == 3:
             return pos[0] == 0 and pos[1]+len(prop.pattern) == SIZE and prop.pattern[-1][0]
 
+    # VERIFIER SI LE PLACEMENT D'UNE PIECE RENTRE BIEN DANS LA GRILLE
     def isPropFittingInGrid(self, prop, pos):
         # VALID X
         if len(prop.pattern[0]) > SIZE - pos[0]: return False
@@ -53,6 +57,7 @@ class Grid:
         if len(prop.pattern) > SIZE - pos[1]: return False
         return True
 
+    # VERIFIER SI UNE CASE NE COLLE PAS UNE AUTRE DU MÊME JOUEUR
     def isTileValid(self, pos, player):
         deltas = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
@@ -63,6 +68,7 @@ class Grid:
 
         return True
 
+    # VERIFIER SI UNE CASE EST DANS LE COIN D'UNE AUTRE DU MÊME JOUEUR
     def isTileTouchCorner(self, pos, player):
         deltas = [(-1, 1), (1, 1), (1, -1), (-1, -1)]
 
@@ -73,11 +79,13 @@ class Grid:
 
         return False
 
+    # PLACER UNE PIECE SUR LA GRILLE
     def placeProp(self, prop, pos, player):
         for dy in range(len(prop.pattern)):
             for dx in range(len(prop.pattern[dy])):
                 if prop.pattern[dy][dx]: self.grid[pos[1]+dy][pos[0]+dx] = player + 1
 
+    # VERIFIER SI UN PLACEMENT EST CORRECTE
     def isValidMove(self, prop, pos, player, first_move):
         is_placed_on_corner = False
         for dy in range(len(prop.pattern)):
@@ -90,6 +98,7 @@ class Grid:
 
         return is_placed_on_corner or first_move
 
+    # VERIFIER SI IL RESTE DES DEPLACEMENTS POSSIBLES POUR UN JOUEUR
     def isAnyValidMove(self, player, first_move, nb_player):
         if first_move: return True
         inv = player.inventory.copy()
@@ -111,7 +120,7 @@ class Grid:
         print("tu ne peux plus jouer {}".format(player.color))
         return False
 
-
+# CLASSE INDICE COULEUR
 class Hint(pygame.sprite.Sprite):
     def __init__(self, color, x, y):
         super().__init__()

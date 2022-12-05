@@ -22,6 +22,7 @@ class Window:
 
         clock = pygame.time.Clock()
 
+    # CREER UNE GRILLE
     def drawGrid(self, grid):
         blockSize = 25 # Set the size of the grid block
         for x in range(len(grid)):
